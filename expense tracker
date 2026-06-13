@@ -1,0 +1,36 @@
+import json
+import os
+from datetime import datetime
+
+FILE_NAME = "expenses.json"
+
+def load_expenses():
+    if not os.path.exists(FILE_NAME):
+        return []
+    with open(FILE_NAME, 'r') as file:
+        return json.load(file)
+
+def save_expenses(data):
+    with open(FILE_NAME, 'w') as file:
+        json.dump(data, file, indent=4)
+
+def add_expense(expenses):
+    date = datetime.now().strftime("%Y-%m-%d")
+    category = input("Enter expense category (e.g., Food, Travel, Utilities): ")
+    try:
+        amount = float(input("Enter amount spent: "))
+    except ValueError:
+        print("Invalid amount. Please enter a number.")
+        return
+        
+    description = input("Enter a brief description: ")
+    
+    expense = {
+        "date": date,
+        "category": category,
+        "amount": amount,
+        "description": description
+    }
+    
+    expenses.append(expense)
+    save_expenses(expenses
